@@ -3,8 +3,8 @@ package TennisScore.src;
 public class TennisScoreBoard {
 
 
-	private int[] player1Score;
-	private int[] player2Score;
+	private static int[] player1Score;
+	private static int[] player2Score;
 	private int player1Advantage, player2Advantage;
 	private String winningPlayer;
 	public TennisScoreBoard(String gameString)
@@ -80,4 +80,24 @@ public class TennisScoreBoard {
 
 		return false;
 	}
+
+	private static void setNextScore(char playerId, int index)
+	{
+		if(playerId == 'd'){
+			player1Score[index] = getNextScore(player1Score[index - 1]);
+			player2Score[index] = player2Score[index - 1];
+		}
+		else{
+			player2Score[index] = getNextScore(player2Score[index - 1]);
+			player1Score[index] = player1Score[index - 1];
+		}
+	}
+
+	private static int getNextScore(int score){
+		if(score == 30){
+			return 40;
+		}
+		return score + 15;
+	}
+
 }
