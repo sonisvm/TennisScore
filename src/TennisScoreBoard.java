@@ -1,4 +1,4 @@
-package TennisScore.src;
+
 
 public class TennisScoreBoard {
 
@@ -7,10 +7,11 @@ public class TennisScoreBoard {
 	private static int[] player2Score;
 	private int player1Advantage, player2Advantage;
 	private String winningPlayer;
+	private boolean flagToStop = false;
 	public TennisScoreBoard(String gameString)
 	{
-		player1Score = new int[gameString.length()];
-		player2Score = new int[gameString.length()];
+		player1Score = new int[gameString.length()+1];
+		player2Score = new int[gameString.length()+1];
 		player1Score[0] = 0;
 		player2Score[0] = 0;
 		calculateScore(gameString);
@@ -18,16 +19,21 @@ public class TennisScoreBoard {
 	
 	private void calculateScore(String gameString)
 	{
+		
 		for(int i=0; i<gameString.length(); i++)
 		{
 			addUpdatedScore(gameString.charAt(i), i+1);
+			if(flagToStop){
+				break;
+			}
 		}
 	}
 	
 	private void addUpdatedScore(char playerId, int index)
 	{
-		if(gameOver(playerId)){
-			System.out.println("Player "+ winningPlayer + " wins!");
+		if(gameOver(playerId, index)){
+			System.out.println(winningPlayer + " wins!");
+			flagToStop = true;
 		}
 		else
 		{
@@ -64,16 +70,22 @@ public class TennisScoreBoard {
 	}
 
 	public String getScoreAt(int time){
-		return player1Score[time] + " " + player2Score[time];
+		if (time > player1Score.length - 1){
+			return "Game ended before this point";
+		}
+		else{
+			return player1Score[time] + "-" + player2Score[time];
+		}
+		
 	}
 
-	public boolean gameOver(char playerId){
-		if (player2Advantage == 2 || (playerId == 'f' && player2Advantage == 40 && player1Advantage != 40)){
+	public boolean gameOver(char playerId, int index){
+		if (player2Advantage+1 == 2 || (player2Score[index-1] == 40 && player1Score[index-1] != 40)){
 			winningPlayer = "player 2";
 			return true;
 		}
 
-		if (player1Advantage == 2 || (playerId == 'd' && player1Advantage == 40 && player2Advantage != 40)){
+		if (player1Advantage+1 == 2 || (player1Score[index-1] == 40 && player2Score[index-1] != 40)){
 			winningPlayer = "player 1";
 			return true;
 		}
@@ -81,7 +93,7 @@ public class TennisScoreBoard {
 		return false;
 	}
 
-	private static void setNextScore(char playerId, int index)
+	private void setNextScore(char playerId, int index)
 	{
 		if(playerId == 'd'){
 			player1Score[index] = getNextScore(player1Score[index - 1]);
@@ -93,11 +105,17 @@ public class TennisScoreBoard {
 		}
 	}
 
-	private static int getNextScore(int score){
+	private int getNextScore(int score){
 		if(score == 30){
 			return 40;
 		}
 		return score + 15;
+	}
+	
+	public void printScores(){
+		for (int i = 0; i < player1Score.length ; i++){
+			System.out.println(player1Score[i] + "-" + player2Score[i]);
+		}
 	}
 
 }
