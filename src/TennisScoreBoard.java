@@ -8,6 +8,7 @@ public class TennisScoreBoard {
 	private int player1Advantage, player2Advantage;
 	private String winningPlayer;
 	private boolean flagToStop = false;
+	private int gameEndTime;
 	public TennisScoreBoard(String gameString)
 	{
 		player1Score = new int[gameString.length()+1];
@@ -31,8 +32,9 @@ public class TennisScoreBoard {
 	
 	private void addUpdatedScore(char playerId, int index)
 	{
-		if(gameOver(playerId, index)){
-			System.out.println(winningPlayer + " wins!");
+		if(gameOver(playerId, index-1)){
+			//System.out.println(winningPlayer + " wins!");
+			gameEndTime = index;
 			flagToStop = true;
 		}
 		else
@@ -70,22 +72,22 @@ public class TennisScoreBoard {
 	}
 
 	public String getScoreAt(int time){
-		if (time > player1Score.length - 1){
-			return "Game ended before this point";
-		}
-		else{
+		
+		if (time < gameEndTime){
 			return player1Score[time] + "-" + player2Score[time];
 		}
+		
+		return "Game ended before this point, " + winningPlayer + " wins!";
 		
 	}
 
 	public boolean gameOver(char playerId, int index){
-		if (player2Advantage+1 == 2 || (player2Score[index-1] == 40 && player1Score[index-1] != 40)){
+		if (player2Advantage+1 == 2 || (player2Score[index] == 40 && player1Score[index] != 40)){
 			winningPlayer = "player 2";
 			return true;
 		}
 
-		if (player1Advantage+1 == 2 || (player1Score[index-1] == 40 && player2Score[index-1] != 40)){
+		if (player1Advantage+1 == 2 || (player1Score[index] == 40 && player2Score[index] != 40)){
 			winningPlayer = "player 1";
 			return true;
 		}
@@ -113,9 +115,12 @@ public class TennisScoreBoard {
 	}
 	
 	public void printScores(){
-		for (int i = 0; i < player1Score.length ; i++){
-			System.out.println(player1Score[i] + "-" + player2Score[i]);
+		for (int i = 0; i < gameEndTime ; i++){
+		
+				System.out.println(player1Score[i] + "-" + player2Score[i]);
+						
 		}
+		System.out.println(winningPlayer + " wins!"); 
 	}
 
 }
