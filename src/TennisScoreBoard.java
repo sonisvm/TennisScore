@@ -15,9 +15,6 @@ public class TennisScoreBoard {
 		calculateScore(gameString);
 	}
 	
-	private void setInitialScore()
-	{
-	}
 	private void calculateScore(String gameString)
 	{
 		for(int i=0; i<gameString.length(); i++)
