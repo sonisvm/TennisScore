@@ -6,5 +6,6 @@ public class TennisGame {
 		
 		 TennisScoreBoard scoreBoard = new TennisScoreBoard("dffdfff");
 		 System.out.println(scoreBoard.getScoreAt(6));
+		 scoreBoard.printScores();
 	 }
 }

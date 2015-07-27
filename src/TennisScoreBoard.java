@@ -3,8 +3,8 @@
 public class TennisScoreBoard {
 
 
-	private static int[] player1Score;
-	private static int[] player2Score;
+	private int[] player1Score;
+	private int[] player2Score;
 	private int player1Advantage, player2Advantage;
 	private String winningPlayer;
 	private boolean flagToStop = false;
