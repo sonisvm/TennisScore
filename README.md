@@ -5,18 +5,18 @@ There is a wrapper class called TennisGame which takes the input string. It crea
 
 Work Allocation
 
-Shravan
-    Constructor for TennisScoreBoard
-    CalculateScore()
+Shravan :-
+    Constructor for TennisScoreBoard, 
+    CalculateScore(), 
     AddUpdatedScore()
     
-Priyanshu
-    isDeuce()
-    resetAdvantageCounter()
+Priyanshu :-
+    isDeuce(), 
+    resetAdvantageCounter(), 
     getScoreAt()
 
-Sonia
-    TennisScore class
+Sonia :-
+    TennisScore class, 
     getNextScore()
     
     
