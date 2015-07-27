@@ -36,7 +36,7 @@ public class TennisScoreBoard {
 	private void addUpdatedScore(char playerId, int index)
 	{
 		if(gameOver(playerId, index-1)){
-			//System.out.println(winningPlayer + " wins!");
+			
 			gameEndTime = index;
 			flagToStop = true;
 		}
