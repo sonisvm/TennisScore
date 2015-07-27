@@ -1,4 +1,4 @@
-
+package TennisScore.src;
 
 public class TennisScoreBoard {
 
@@ -88,7 +88,7 @@ public class TennisScoreBoard {
 		
 	}
 
-	public boolean gameOver(char playerId, int index){
+	private boolean gameOver(char playerId, int index){
 		if (playerId == 'f' && (player2Advantage == 2 || ( player2Score[index] == 40 && player1Score[index] != 40))){
 			winningPlayer = "player 2";
 			return true;
