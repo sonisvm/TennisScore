@@ -6,9 +6,11 @@ public class TennisScoreBoard {
 	private int[] player1Score;
 	private int[] player2Score;
 	private int player1Advantage, player2Advantage;
-	private String winningPlayer;
+	private String winningPlayer = "nobody";
 	private boolean flagToStop = false;
 	private int gameEndTime;
+	private boolean deuceOccured;
+	
 	public TennisScoreBoard(String gameString)
 	{
 		player1Score = new int[gameString.length()+1];
@@ -28,6 +30,7 @@ public class TennisScoreBoard {
 				break;
 			}
 		}
+		gameEndTime = gameString.length();
 	}
 	
 	private void addUpdatedScore(char playerId, int index)
@@ -41,7 +44,7 @@ public class TennisScoreBoard {
 		{
 			if(isADeuce(index - 1))
 			{
-			updateAdvantageCounter(playerId, index);	
+				updateAdvantageCounter(playerId, index);	
 			}
 			else
 			{
@@ -51,7 +54,11 @@ public class TennisScoreBoard {
 	}
 
 	private boolean isADeuce(int time){
-		return (player1Score[time] == 40 && player2Score[time] == 40);
+		if (player1Score[time] == 40 && player2Score[time] == 40){
+			deuceOccured = true;
+		}
+		
+		return deuceOccured;
 	}
 
 	private void updateAdvantageCounter(char player, int time){
@@ -82,12 +89,12 @@ public class TennisScoreBoard {
 	}
 
 	public boolean gameOver(char playerId, int index){
-		if (player2Advantage+1 == 2 || (player2Score[index] == 40 && player1Score[index] != 40)){
+		if (playerId == 'f' && (player2Advantage == 2 || ( player2Score[index] == 40 && player1Score[index] != 40))){
 			winningPlayer = "player 2";
 			return true;
 		}
 
-		if (player1Advantage+1 == 2 || (player1Score[index] == 40 && player2Score[index] != 40)){
+		if (playerId == 'd' && (player1Advantage == 2 || ( player1Score[index] == 40 && player2Score[index] != 40))){
 			winningPlayer = "player 1";
 			return true;
 		}
