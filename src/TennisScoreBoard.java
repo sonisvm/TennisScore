@@ -1,7 +1,7 @@
 
 public class TennisScoreBoard {
 
-	private final int[] GAME_POINTS = {0,15,30,40};
+
 	private int[] player1Score;
 	private int[] player2Score;
 	private int player1Advantage, player2Advantage;
