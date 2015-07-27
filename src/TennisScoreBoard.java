@@ -1,3 +1,4 @@
+package TennisScore.src;
 
 public class TennisScoreBoard {
 
@@ -25,12 +26,12 @@ public class TennisScoreBoard {
 	
 	private void addUpdatedScore(char playerId, int index)
 	{
-		if(gameOver()){
+		if(gameOver(playerId)){
 			System.out.println("Player "+ winningPlayer + " wins!");
 		}
 		else
 		{
-			if(isADeuce())
+			if(isADeuce(index - 1))
 			{
 			updateAdvantageCounter(playerId, index);	
 			}
@@ -40,5 +41,43 @@ public class TennisScoreBoard {
 			}
 		}
 	}
-	
+
+	private boolean isADeuce(int time){
+		return (player1Score[time] == 40 && player2Score[time] == 40);
+	}
+
+	private void updateAdvantageCounter(char player, int time){
+		if (player1Advantage == 1 && player2Advantage == 1){
+			player1Advantage = 0;
+			player2Advantage = 0;
+		}
+		else
+			switch (player){
+				case 'd' : player1Advantage++;
+					break;
+				case 'f' : player2Advantage++;
+					break;
+			}
+
+		player1Score[time] = player1Advantage;
+		player2Score[time] = player2Advantage;
+	}
+
+	public String getScoreAt(int time){
+		return player1Score[time] + " " + player2Score[time];
+	}
+
+	public boolean gameOver(char playerId){
+		if (player2Advantage == 2 || (playerId == 'f' && player2Advantage == 40 && player1Advantage != 40)){
+			winningPlayer = "player 2";
+			return true;
+		}
+
+		if (player1Advantage == 2 || (playerId == 'd' && player1Advantage == 40 && player2Advantage != 40)){
+			winningPlayer = "player 1";
+			return true;
+		}
+
+		return false;
+	}
 }
